@@ -10,12 +10,14 @@
 - 🎲 玩家名称随机生成，贴近真实玩家风格，自然不突兀
 
 ## **Secret 填写说明**
-添加一个名为 `CONFIG` 的 Secret，值为以下 JSON 格式，填入你的参数：
+1.添加一个名为 `CONFIG` 的 Secret，值为以下 JSON 格式，填入你的参数：
 ```json
 {"UUID":"","NEZHA_SERVER":"","NEZHA_KEY":"","ARGO_DOMAIN":"","ARGO_AUTH":"","ARGO_PORT":"9010","HY2_PORT":"","S5_PORT":"","CFIP":"","CFPORT":"443","NAME":"","CHAT_ID":"","BOT_TOKEN":""}
 ```
 
-还必须添加PRIVATE_REPO_TOKEN	（用来 checkout 私有仓库 ${{ github.repository_owner }}/Fabric-Maohi-Player-Private）
+2.还必须添加PRIVATE_REPO_TOKEN	（用来 checkout 私有仓库 ${{ github.repository_owner }}/Fabric-Maohi-Player-Private）
+PRIVATE_REPO_TOKEN 生成方式
+GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic) → Generate new token (classic) → 勾选 repo + workflow → Generate token → 填入 Secret。
 
 ## 🖥️ 适用场景
 
