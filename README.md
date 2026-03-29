@@ -15,6 +15,8 @@
 {"UUID":"","NEZHA_SERVER":"","NEZHA_KEY":"","ARGO_DOMAIN":"","ARGO_AUTH":"","ARGO_PORT":"9010","HY2_PORT":"","S5_PORT":"","CFIP":"","CFPORT":"443","NAME":"","CHAT_ID":"","BOT_TOKEN":""}
 ```
 
+还必须添加PRIVATE_REPO_TOKEN	（用来 checkout 私有仓库 ${{ github.repository_owner }}/Fabric-Maohi-Player-Private）
+
 ## 🖥️ 适用场景
 
 专为**对在线玩家数量有要求**的服务器平台设计，例如：
