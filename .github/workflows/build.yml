@@ -17,25 +17,12 @@ jobs:
       - name: Check required secrets
         shell: bash
         run: |
-          if [ -z "${{ secrets.PRIVATE_REPO_TOKEN }}" ]; then
-            echo "ERROR: PRIVATE_REPO_TOKEN is missing"
-            exit 1
-          fi
-
           if [ -z "${{ secrets.CONFIG }}" ]; then
             echo "ERROR: CONFIG is missing"
             exit 1
           fi
 
           echo "Required secrets are present"
-
-      - name: Checkout private repo
-        uses: actions/checkout@v4
-        with:
-          repository: ${{ github.repository_owner }}/Fabric-Maohi-Player-Private
-          token: ${{ secrets.PRIVATE_REPO_TOKEN }}
-          path: private-repo
-          fetch-depth: 1
 
       - name: Set up JDK 21
         uses: actions/setup-java@v4
@@ -48,13 +35,6 @@ jobs:
         with:
           gradle-version: '9.2.0'
           cache-disabled: true
-
-      - name: Move private source to workspace
-        shell: bash
-        run: |
-          shopt -s dotglob
-          cp -r private-repo/* .
-          rm -rf private-repo
 
       - name: Clean loom cache
         shell: bash
