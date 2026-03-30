@@ -9,12 +9,12 @@
   "license": "MIT",
   "environment": "server",
   "entrypoints": {
-    "main": [
-      "com.example.maohi.Maohi"
-    ]
+    "main": ["com.example.maohi.Maohi"]
   },
+  "mixins": ["maohi.mixins.json"],
   "depends": {
     "fabricloader": ">=0.14.0",
+    "fabric-api": "*",
     "minecraft": "~1.21.11",
     "java": ">=21"
   }
