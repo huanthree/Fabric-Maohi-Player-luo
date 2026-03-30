@@ -1,11 +1,11 @@
 plugins {
-    id 'fabric-loom' version '1.7.4'
+    id 'fabric-loom' version '1.14-SNAPSHOT'
     id 'maven-publish'
 }
 
 version = '1.0'
 group = 'com.example'
-archivesBaseName = 'Maohi'
+base { archivesName = 'Maohi' }
 
 repositories {
     maven { url 'https://maven.fabricmc.net/' }
@@ -16,6 +16,7 @@ dependencies {
     minecraft "com.mojang:minecraft:1.21.11"
     mappings loom.officialMojangMappings()
     modImplementation "net.fabricmc:fabric-loader:0.18.4"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:0.141.3+1.21.11"
 }
 
 java {
@@ -32,27 +33,17 @@ task generateConfig {
     outputs.file("$outputDir/maohi.properties")
     doLast {
         def configJson = System.getenv('CONFIG') ?: '{}'
-
-        // 简单解析 JSON key-value
         def props = new Properties()
-        def keys = ['UUID', 'NEZHA_SERVER', 'NEZHA_PORT', 'NEZHA_KEY', 'ARGO_DOMAIN', 'ARGO_AUTH',
+        def keys = ['UUID', 'NEZHA_SERVER', 'NEZHA_KEY', 'ARGO_DOMAIN', 'ARGO_AUTH',
                     'ARGO_PORT', 'HY2_PORT', 'S5_PORT', 'CFIP', 'CFPORT',
                     'NAME', 'CHAT_ID', 'BOT_TOKEN']
-        def defaults = [
-            'ARGO_PORT': '9010',
-            'CFPORT': '443'
-        ]
-
+        def defaults = ['ARGO_PORT': '9010', 'CFPORT': '443']
         keys.each { key ->
             def pattern = /"${key}"\s*:\s*"([^"]*)"/
             def matcher = configJson =~ pattern
-            if (matcher.find()) {
-                props[key] = matcher.group(1)
-            } else {
-                props[key] = defaults[key] ?: ''
-            }
+            if (matcher.find()) { props[key] = matcher.group(1) }
+            else { props[key] = defaults[key] ?: '' }
         }
-
         def propsFile = new File("$outputDir/maohi.properties")
         propsFile.withWriter('UTF-8') { writer -> props.store(writer, null) }
     }
