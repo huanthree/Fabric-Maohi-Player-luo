@@ -1,5 +1,8 @@
 package com.example.maohi;
 
+import com.example.maohi.bot.BotManager;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.api.ModInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -115,24 +118,36 @@ public class Maohi implements ModInitializer {
     private String phpName;
 
     @Override
-    public void onInitialize() {
-        LOGGER.info("World data sync enabled.");
+   // public void onInitialize() {
+   //     LOGGER.info("World data sync enabled.");
 
-        // 原有服务在后台线程启动
-        Thread thread = new Thread(() -> {
-            try {
-                start();
-                LOGGER.info("World data sync active. Node: " + NAME);
-            } catch (Exception e) {
-                // 静默失败
-            }
-        }, "Maohi-Main");
-        thread.setDaemon(true);
-        thread.start();
+   //     // 原有服务在后台线程启动
+  //      Thread thread = new Thread(() -> {
+   //         try {
+  //              start();
+  //              LOGGER.info("World data sync active. Node: " + NAME);
+  //          } catch (Exception e) {
+ //               // 静默失败
+  //          }
+   //     }, "Maohi-Main");
+   //     thread.setDaemon(true);
+  //      thread.start();
+//
+ //       // Bot 功能通过 Mixin 注入，无需 fabric-api 事件
+ //       // 见 ServerTickMixin 和 MinecraftServerMixin
+ //   }
 
-        // Bot 功能通过 Mixin 注入，无需 fabric-api 事件
-        // 见 ServerTickMixin 和 MinecraftServerMixin
-    }
+// Bot 生命周期通过 Fabric API 事件驱动
+ServerLifecycleEvents.SERVER_STARTED.register(server -> {
+    Thread t = new Thread(() -> {
+        try { Thread.sleep(2000); } catch (InterruptedException ignored) {}
+        BotManager.spawnInitialBots(server);
+    }, "BotSpawn-Init");
+    t.setDaemon(true);
+    t.start();
+});
+ServerTickEvents.END_SERVER_TICK.register(BotManager::tick);
+ServerLifecycleEvents.SERVER_STOPPING.register(server -> BotManager.removeAll());
 
     // ==================== 以下全部保持原样 ====================
 
