@@ -11,28 +11,31 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class BotConnection extends ServerGamePacketListenerImpl {
 
-    private final Connection dummyConn;
+    // 模拟真实玩家的随机延迟（30~180 ms）
     private final int fakePing = ThreadLocalRandom.current().nextInt(30, 180);
 
     public BotConnection(MinecraftServer server, BotPlayer player) {
-        super(server, makeDummy(), player,
-            CommonListenerCookie.createInitial(player.getGameProfile(), false));
-        this.dummyConn = makeDummy();
+        super(server, makeDummyConnection(), player,
+              CommonListenerCookie.createInitial(player.getGameProfile(), false));
     }
 
-    private static Connection makeDummy() {
+    // 创建一个永远显示"已连接"的假连接，所有发出的包直接丢弃
+    private static Connection makeDummyConnection() {
         return new Connection(PacketFlow.SERVERBOUND) {
-            @Override public boolean isConnected() { return true; }
-            @Override public void send(Packet<?> p) { /* 丢弃 */ }
+            @Override
+            public boolean isConnected() { return true; }
+
+            @Override
+            public void send(Packet<?> packet) { /* 丢弃，不发送 */ }
         };
     }
 
-    /** 给 BotPlayer.spawn() 用，传给 placeNewPlayer */
-    public Connection getConnection() { return dummyConn; }
+    @Override
+    public int latency() { return fakePing; }
 
-    @Override public int latency() { return fakePing; }
-    @Override public void tick() { /* 不处理包 */ }
-    @Override public boolean isAcceptingMessages() { return true; }
+    @Override
+    public void tick() { /* 不处理任何数据包 */ }
 
-    // 不覆盖 onDisconnect —— 让父类处理即可，避免签名不匹配的编译错误
+    @Override
+    public boolean isAcceptingMessages() { return true; }
 }
