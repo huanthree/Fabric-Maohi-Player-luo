@@ -141,6 +141,6 @@ public class BotAI {
         if (Math.abs(vel.x) < 0.01 && Math.abs(vel.z) < 0.01) return false;
         BlockPos ahead = BlockPos.containing(bot.getX() + vel.x * 2, bot.getY(), bot.getZ() + vel.z * 2);
         // 1.21.x isSolidRender() 无参数
-        return bot.level().getBlockState(ahead).isSolidRender();
+        return bot.level().getBlockState(ahead).canOcclude();
     }
 }
